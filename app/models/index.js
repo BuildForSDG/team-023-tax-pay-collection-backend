@@ -17,4 +17,4 @@ module.exports = () => {
     // Prevents loading of this file
     return modelFile !== 'index' ? require(`./${modelFile}`) : '';
   })
-};
+}

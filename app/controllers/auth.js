@@ -37,7 +37,7 @@ const generateToken = (user) => {
       process.env.JWT_SECRET
     )
   );
-}
+};
 
 /**
  * Creates an object with user info
@@ -61,7 +61,7 @@ const setUserInfo = (req) => {
     };
   }
   return user;
-}
+};
 
 /**
  * Saves a new user access and then returns token
@@ -208,7 +208,7 @@ const passwordsDoNotMatch = async (user) => {
     }
     reject(utils.buildErrObject(422, 'ERROR'));
   })
-}
+};
 
 /**
  * Registers a new user in database
@@ -247,7 +247,7 @@ const returnRegisterToken = (item, userInfo) => {
     user: userInfo
   };
   return data;
-}
+};
 
 /**
  * Checks if verification id exists for user
@@ -388,7 +388,7 @@ const forgotPasswordResponse = (item) => {
     };
   }
   return data;
-}
+};
 
 /**
  * Checks against user if has quested role

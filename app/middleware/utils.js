@@ -42,7 +42,7 @@ exports.handleError = (res, err) => {
       msg: err.message
     }
   });
-};
+}
 
 /**
  * Builds error object

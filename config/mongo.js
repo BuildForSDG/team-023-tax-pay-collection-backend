@@ -34,11 +34,11 @@ module.exports = () => {
     );
     mongoose.set('useCreateIndex', true);
     mongoose.set('useFindAndModify', false);
-  };
+  }
   connect();
 
   mongoose.connection.on('error', console.log);
   mongoose.connection.on('disconnected', connect);
 
   loadModels();
-};
+}

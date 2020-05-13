@@ -106,7 +106,7 @@ const hash = (user, salt, next) => {
     user.password = newHash;
     return next();
   })
-};
+}
 
 const genSalt = (user, SALT_FACTOR, next) => {
   bcrypt.genSalt(SALT_FACTOR, (err, salt) => {
@@ -115,7 +115,7 @@ const genSalt = (user, SALT_FACTOR, next) => {
     }
     return hash(user, salt, next);
   })
-};
+}
 
 UserSchema.pre('save', function (next) {
   const that = this;
@@ -128,6 +128,6 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.methods.comparePassword = function (passwordAttempt, cb) {
   bcrypt.compare(passwordAttempt, this.password, (err, isMatch) => (err ? cb(err) : cb(null, isMatch)));
-};
+}
 UserSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('User', UserSchema);

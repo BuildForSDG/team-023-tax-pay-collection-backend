@@ -22,7 +22,7 @@ const jwtExtractor = (req) => {
     token = auth.decrypt(token);
   }
   return token;
-};
+}
 
 /**
  * Options object for jwt middlware

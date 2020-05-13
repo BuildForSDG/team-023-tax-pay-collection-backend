@@ -42,9 +42,9 @@ function calcTaxes(income) {
 
   if (income > HIGH_INCOME_AMOUNT_RANGE) {
     tax = (
-      (income - HIGH_INCOME_AMOUNT_RANGE) * HIGH_INCOME_AMOUNT_RANGE_PERCENTAGE +
-      (HIGH_INCOME_AMOUNT_RANGE - MEDIUM_UPPER_INCOME_AMOUNT_RANGE) * MEDIUM_UPPER_INCOME_AMOUNT_RANGE_PERCENTAGE +
-      (MIDDLE_LIMIT_BRACKET - MEDIUM_LOWER_INCOME_AMOUNT_RANGE) * MEDIUM_LOWER_INCOME_AMOUNT_RANGE_PERCENTAGE
+      (income - HIGH_INCOME_AMOUNT_RANGE) * HIGH_INCOME_AMOUNT_RANGE_PERCENTAGE
+      + (HIGH_INCOME_AMOUNT_RANGE - MEDIUM_UPPER_INCOME_AMOUNT_RANGE) * MEDIUM_UPPER_INCOME_AMOUNT_RANGE_PERCENTAGE
+      + (MIDDLE_LIMIT_BRACKET - MEDIUM_LOWER_INCOME_AMOUNT_RANGE) * MEDIUM_LOWER_INCOME_AMOUNT_RANGE_PERCENTAGE
     ).toFixed(2);
     taxPrint = `Tax Payable: ${tax}`;
     incomeAfterTax = (income - tax).toFixed(2);
@@ -56,19 +56,19 @@ function calcTaxes(income) {
     taxPercentageGroupPrint = `See your percentage breakdown of income by tax group: ${taxPercentageGroup1}% between 0 to 10000, ${taxPercentageGroup2}% between 10,001 to 35000, ${taxPercentageGroup3}% between 35,001 to 100000 and ${taxPercentageGroup4}% across the 100000+ bracket`;
     taxGroup1 = 0;
     taxGroup2 = (
-      (MIDDLE_LIMIT_BRACKET - MEDIUM_LOWER_INCOME_AMOUNT_RANGE) *
-      MEDIUM_LOWER_INCOME_AMOUNT_RANGE_PERCENTAGE
+      (MIDDLE_LIMIT_BRACKET - MEDIUM_LOWER_INCOME_AMOUNT_RANGE)
+      * MEDIUM_LOWER_INCOME_AMOUNT_RANGE_PERCENTAGE
     ).toFixed(2);
     taxGroup3 = (
-      (HIGH_INCOME_AMOUNT_RANGE - MEDIUM_UPPER_INCOME_AMOUNT_RANGE) *
-      MEDIUM_UPPER_INCOME_AMOUNT_RANGE_PERCENTAGE
+      (HIGH_INCOME_AMOUNT_RANGE - MEDIUM_UPPER_INCOME_AMOUNT_RANGE)
+      * MEDIUM_UPPER_INCOME_AMOUNT_RANGE_PERCENTAGE
     ).toFixed(2);
     taxGroup5 = ((income - HIGH_INCOME_AMOUNT_RANGE) * HIGH_INCOME_AMOUNT_RANGE_PERCENTAGE).toFixed(2);
     taxGroupPrint = `and, here is your breakdown of tax paid at each group: ${taxGroup1} at 0%, ${taxGroup2} at 20%, ${taxGroup3} at 40% and ${taxGroup5} at 50%.`;
   } else if (income > MEDIUM_UPPER_INCOME_AMOUNT_RANGE) {
     tax = (
-      (income - MEDIUM_UPPER_INCOME_AMOUNT_RANGE) * MEDIUM_UPPER_INCOME_AMOUNT_RANGE_PERCENTAGE +
-      (MIDDLE_LIMIT_BRACKET - MEDIUM_LOWER_INCOME_AMOUNT_RANGE) * MEDIUM_LOWER_INCOME_AMOUNT_RANGE_PERCENTAGE
+      (income - MEDIUM_UPPER_INCOME_AMOUNT_RANGE) * MEDIUM_UPPER_INCOME_AMOUNT_RANGE_PERCENTAGE
+      + (MIDDLE_LIMIT_BRACKET - MEDIUM_LOWER_INCOME_AMOUNT_RANGE) * MEDIUM_LOWER_INCOME_AMOUNT_RANGE_PERCENTAGE
     ).toFixed(2);
     taxPrint = `Tax Payable: ${tax}`;
     incomeAfterTax = (income - tax).toFixed(2);
@@ -79,8 +79,8 @@ function calcTaxes(income) {
     taxPercentageGroupPrint = `See your percentage breakdown of income by tax group: ${taxPercentageGroup1}% between 0 to 10000, ${taxPercentageGroup2}% between 10,001 to 35000 and ${taxPercentageGroup3}% between 35,001 to 100000`;
     taxGroup1 = 0;
     taxGroup2 = (
-      (MIDDLE_LIMIT_BRACKET - MEDIUM_LOWER_INCOME_AMOUNT_RANGE) *
-      MEDIUM_LOWER_INCOME_AMOUNT_RANGE_PERCENTAGE
+      (MIDDLE_LIMIT_BRACKET - MEDIUM_LOWER_INCOME_AMOUNT_RANGE)
+      * MEDIUM_LOWER_INCOME_AMOUNT_RANGE_PERCENTAGE
     ).toFixed(2);
     taxGroup3 = ((income - MEDIUM_UPPER_INCOME_AMOUNT_RANGE) * MEDIUM_UPPER_INCOME_AMOUNT_RANGE_PERCENTAGE).toFixed(2);
     taxGroupPrint = `and, here is your breakdown of tax paid at each group: ${taxGroup1} at 0%, ${taxGroup2} at 20% and ${taxGroup3} at 40%.`;

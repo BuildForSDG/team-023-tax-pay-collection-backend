@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 const express = require('express');
 const controller = require('../controllers/auth');
 const validate = require('../controllers/auth.validate');
@@ -51,6 +52,7 @@ router.get(
 /*
  * Login route
  */
+
 router.post('/login', trimRequest.all, validate.login, controller.login);
 
 module.exports = router;

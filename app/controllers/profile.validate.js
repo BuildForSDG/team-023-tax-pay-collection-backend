@@ -6,21 +6,10 @@ const { validationResult } = require('../middleware/utils');
  * Validates update profile request
  */
 exports.updateProfile = [
-  check('name').exists().withMessage('MISSING').not()
-    .isEmpty()
-    .withMessage('IS_EMPTY'),
-  check('phone').exists().withMessage('MISSING').not()
-    .isEmpty()
-    .withMessage('IS_EMPTY')
-    .trim(),
-  check('city').exists().withMessage('MISSING').not()
-    .isEmpty()
-    .withMessage('IS_EMPTY')
-    .trim(),
-  check('country').exists().withMessage('MISSING').not()
-    .isEmpty()
-    .withMessage('IS_EMPTY')
-    .trim(),
+  check('name').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
+  check('phone').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY').trim(),
+  check('city').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY').trim(),
+  check('country').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY').trim(),
   check('urlTwitter')
     .optional()
     .custom((v) => (v === '' ? true : validator.isURL(v)))
