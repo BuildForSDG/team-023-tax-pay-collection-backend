@@ -1,46 +1,100 @@
 {
-  "name": "js-starter",
+  "name": "tax-collection-app",
   "version": "0.0.1",
-  "description": "A boilerplate for starting js code",
+  "description": "Tax and Revenue collection Backend Server",
   "keywords": [
     "js-starter",
     "boilerplate"
   ],
   "private": false,
-  "main": "dist/index.js",
+  "main": "server.js",
   "types": "dist/index.d.ts",
   "directories": {
     "test": "__tests__"
   },
   "scripts": {
-    "test": "jest",
+    "test:jest": "jest",
     "test:watch": "jest --watch",
     "test:cover": "jest --coverage",
-    "lint": "eslint \"src/**/*.js\"",
-    "start": "parcel ./src/index.html"
+    "lint:web": "eslint \"src/**/*.js\"",
+    "start": "cross-env NODE_ENV=production pm2 start server.js",
+    "mocha": "nyc mocha --timeout=5000 --exit",
+    "test": "npm run fresh && npm run mocha",
+    "dev": "cross-env NODE_ENV=development nodemon server.js",
+    "fresh": "npm run clean && npm run seed",
+    "format": "prettier --write --config .prettierrc.json \"**/*.js\"",
+    "lint": "eslint --fix --config .eslintrc.json \"**/*.js\"",
+    "remark": "remark . -o"
   },
   "author": {
-    "name": "Build For SDG",
-    "email": "buildforsdg@andela.com"
+    "name": "Saviour O A TTL @Team-023",
+    "email": "notify@team023.com"
   },
-  "homepage": "https://github.com/BuildForSDG/js-starter#readme",
+  "homepage": "https://github.com/BuildForSDG/team-023-tax-pay-collection-backend#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/BuildForSDG/js-starter.git"
+    "url": "https://github.com/BuildForSDG/team-023-tax-pay-collection-backend.git"
   },
   "bugs": {
-    "url": "https://github.com/BuildForSDG/js-starter/issues"
+    "url": "https://github.com/BuildForSDG/team-023-tax-pay-collection-backend/issues"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run remark",
+      "pre-push": "npm run test"
+    }
   },
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "date-fns": "^2.11.1",
+    "dotenv-safe": "^8.2.0",
+    "ejs": "^3.0.2",
+    "expeditious-engine-redis": "^0.1.2",
+    "express": "^4.17.1",
+    "express-expeditious": "^5.1.1",
+    "express-validator": "^6.4.0",
+    "helmet": "^3.22.0",
+    "i18n": "^0.8.6",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.6",
+    "mongoose-paginate-v2": "^1.3.7",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.4.6",
+    "nodemailer-mailgun-transport": "^2.0.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "remark-cli": "^8.0.0",
+    "request-ip": "^2.1.3",
+    "trim-request": "^1.0.6",
+    "uuid": "^7.0.3",
+    "validator": "^13.0.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cross-env": "^7.0.2",
     "babel-jest": "^25.4.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
+    "eslint-config-formidable": "^4.0.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "faker": "^4.1.0",
     "jest": "^25.4.0",
+    "husky": "^4.2.3",
+    "mocha": "^7.1.1",
+    "mongo-seeding": "^3.4.0",
+    "nodemon": "^2.0.2",
+    "nyc": "^15.0.1",
+    "prettier": "^2.0.3",
+    "prettier-eslint": "^9.0.1",
     "parcel-bundler": "^1.12.4"
   },
   "browserslist": [
