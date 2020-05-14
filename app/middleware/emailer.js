@@ -30,7 +30,7 @@ const sendEmail = async (data, callback) => {
     }
     return callback(true);
   })
-}
+};
 
 /**
  * Prepares to send email

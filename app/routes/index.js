@@ -17,7 +17,7 @@ router.use('/taxcalculator', require('./taxcalculator'));
  */
 router.get('/', (req, res) => {
   res.render('index');
-});
+})
 
 /*
  * Handle 404 error
@@ -28,6 +28,6 @@ router.use('*', (req, res) => {
       msg: 'URL_NOT_FOUND'
     }
   });
-});
+})
 
 module.exports = router;

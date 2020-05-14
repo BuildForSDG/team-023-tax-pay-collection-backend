@@ -9,7 +9,7 @@ const buildSort = (sort, order) => {
   const sortBy = {};
   sortBy[sort] = order;
   return sortBy;
-}
+};
 
 /**
  * Hack for mongoose-paginate, removes 'id' from results
@@ -18,7 +18,7 @@ const buildSort = (sort, order) => {
 const cleanPaginationID = (result) => {
   result.docs.map((element) => delete element.id);
   return result;
-}
+};
 
 /**
  * Builds initial options for query
