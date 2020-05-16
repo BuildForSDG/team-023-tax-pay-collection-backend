@@ -24,21 +24,20 @@ const cleanPaginationID = (result) => {
  * Builds initial options for query
  * @param {Object} query - query object
  */
-const listInitOptions = async (req) =>
-  new Promise((resolve) => {
-    const order = req.query.order || -1;
-    const sort = req.query.sort || 'createdAt';
-    const sortBy = buildSort(sort, order);
-    const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 5;
-    const options = {
-      sort: sortBy,
-      lean: true,
-      page,
-      limit
-    };
-    resolve(options);
-  })
+const listInitOptions = async (req) => new Promise((resolve) => {
+  const order = req.query.order || -1;
+  const sort = req.query.sort || 'createdAt';
+  const sortBy = buildSort(sort, order);
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 5;
+  const options = {
+    sort: sortBy,
+    lean: true,
+    page,
+    limit
+  };
+  resolve(options);
+});
 
 module.exports = {
   /**
@@ -64,7 +63,7 @@ module.exports = {
                 $regex: new RegExp(query.filter, 'i')
               }
             });
-          })
+          });
           // Puts array result in data
           data.$or = array;
           resolve(data);
@@ -91,7 +90,7 @@ module.exports = {
           reject(buildErrObject(422, err.message));
         }
         resolve(cleanPaginationID(items));
-      })
+      });
     });
   },
 
@@ -104,7 +103,7 @@ module.exports = {
       model.findById(id, (err, item) => {
         itemNotFound(err, item, reject, 'NOT_FOUND');
         resolve(item);
-      })
+      });
     });
   },
 
@@ -119,7 +118,7 @@ module.exports = {
           reject(buildErrObject(422, err.message));
         }
         resolve(item);
-      })
+      });
     });
   },
 
@@ -142,7 +141,7 @@ module.exports = {
           resolve(item);
         }
       );
-    })
+    });
   },
 
   /**
@@ -154,7 +153,7 @@ module.exports = {
       model.findByIdAndRemove(id, (err, item) => {
         itemNotFound(err, item, reject, 'NOT_FOUND');
         resolve(buildSuccObject('DELETED'));
-      })
+      });
     });
   }
 };

@@ -84,11 +84,10 @@ exports.buildSuccObject = (message) => ({
  * Checks if given ID is good for MongoDB
  * @param {string} id - id to check
  */
-exports.isIDGood = async (id) =>
-  new Promise((resolve, reject) => {
-    const goodID = mongoose.Types.ObjectId.isValid(id);
-    return goodID ? resolve(id) : reject(this.buildErrObject(422, 'ID_MALFORMED'));
-  })
+exports.isIDGood = async (id) => new Promise((resolve, reject) => {
+  const goodID = mongoose.Types.ObjectId.isValid(id);
+  return goodID ? resolve(id) : reject(this.buildErrObject(422, 'ID_MALFORMED'));
+});
 
 /**
  * Item not found

@@ -8,7 +8,9 @@ const { validationResult } = require('../middleware/utils');
  */
 
 exports.checkIncome = [
-  check('income').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
+  check('income').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
   (req, res, next) => {
     validationResult(req, res, next);
   }

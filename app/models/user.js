@@ -105,7 +105,7 @@ const hash = (user, salt, next) => {
     }
     user.password = newHash;
     return next();
-  })
+  });
 };
 
 const genSalt = (user, SALT_FACTOR, next) => {
@@ -114,7 +114,7 @@ const genSalt = (user, SALT_FACTOR, next) => {
       return next(err);
     }
     return hash(user, salt, next);
-  })
+  });
 };
 
 UserSchema.pre('save', function (next) {
@@ -124,7 +124,7 @@ UserSchema.pre('save', function (next) {
     return next();
   }
   return genSalt(that, SALT_FACTOR, next);
-})
+});
 
 UserSchema.methods.comparePassword = function (passwordAttempt, cb) {
   bcrypt.compare(passwordAttempt, this.password, (err, isMatch) => (err ? cb(err) : cb(null, isMatch)));

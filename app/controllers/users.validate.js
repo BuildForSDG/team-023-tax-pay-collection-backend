@@ -6,9 +6,15 @@ const { validationResult } = require('../middleware/utils');
  * Validates create new item request
  */
 exports.createItem = [
-  check('frist_name').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
-  check('last_name').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
-  check('date_of_birth').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
+  check('frist_name').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+  check('last_name').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+  check('date_of_birth').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
   check('email')
     .exists()
     .withMessage('MISSING')
@@ -35,10 +41,22 @@ exports.createItem = [
     .withMessage('IS_EMPTY')
     .isIn(['user', 'admin'])
     .withMessage('USER_NOT_IN_KNOWN_ROLE'),
-  check('phone').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY').trim(),
-  check('city').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY').trim(),
-  check('state').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY').trim(),
-  check('country').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY').trim(),
+  check('phone').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .trim(),
+  check('city').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .trim(),
+  check('state').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .trim(),
+  check('country').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .trim(),
   (req, res, next) => {
     validationResult(req, res, next);
   }
@@ -48,16 +66,40 @@ exports.createItem = [
  * Validates update item request
  */
 exports.updateItem = [
-  check('frist_name').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
-  check('last_name').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
-  check('date_of_birth').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
-  check('email').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
-  check('role').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
-  check('phone').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY').trim(),
-  check('city').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY').trim(),
-  check('state').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY').trim(),
-  check('country').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY').trim(),
-  check('id').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
+  check('frist_name').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+  check('last_name').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+  check('date_of_birth').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+  check('email').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+  check('role').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+  check('phone').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .trim(),
+  check('city').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .trim(),
+  check('state').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .trim(),
+  check('country').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY')
+    .trim(),
+  check('id').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
   (req, res, next) => {
     validationResult(req, res, next);
   }
@@ -67,7 +109,9 @@ exports.updateItem = [
  * Validates get item request
  */
 exports.getItem = [
-  check('id').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
+  check('id').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
   (req, res, next) => {
     validationResult(req, res, next);
   }
@@ -77,7 +121,9 @@ exports.getItem = [
  * Validates delete item request
  */
 exports.deleteItem = [
-  check('id').exists().withMessage('MISSING').not().isEmpty().withMessage('IS_EMPTY'),
+  check('id').exists().withMessage('MISSING').not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
   (req, res, next) => {
     validationResult(req, res, next);
   }

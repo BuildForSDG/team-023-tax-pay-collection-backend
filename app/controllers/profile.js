@@ -12,79 +12,74 @@ const auth = require('../middleware/auth');
  * Gets profile from database by id
  * @param {string} id - user id
  */
-const getProfileFromDB = async (id) =>
-  new Promise((resolve, reject) => {
-    model.findById(id, '-_id -updatedAt -createdAt', (err, user) => {
-      utils.itemNotFound(err, user, reject, 'NOT_FOUND');
-      resolve(user);
-    })
+const getProfileFromDB = async (id) => new Promise((resolve, reject) => {
+  model.findById(id, '-_id -updatedAt -createdAt', (err, user) => {
+    utils.itemNotFound(err, user, reject, 'NOT_FOUND');
+    resolve(user);
   });
+});
 
 /**
  * Updates profile in database
  * @param {Object} req - request object
  * @param {string} id - user id
  */
-const updateProfileInDB = async (req, id) =>
-  new Promise((resolve, reject) => {
-    model.findByIdAndUpdate(
-      id,
-      req,
-      {
-        new: true,
-        runValidators: true,
-        select: '-role -_id -updatedAt -createdAt'
-      },
-      (err, user) => {
-        utils.itemNotFound(err, user, reject, 'NOT_FOUND');
-        resolve(user);
-      }
-    )
-  });
+const updateProfileInDB = async (req, id) => new Promise((resolve, reject) => {
+  model.findByIdAndUpdate(
+    id,
+    req,
+    {
+      new: true,
+      runValidators: true,
+      select: '-role -_id -updatedAt -createdAt'
+    },
+    (err, user) => {
+      utils.itemNotFound(err, user, reject, 'NOT_FOUND');
+      resolve(user);
+    }
+  );
+});
 
 /**
  * Finds user by id
  * @param {string} email - user id
  */
-const findUser = async (id) =>
-  new Promise((resolve, reject) => {
-    model.findById(id, 'password email', (err, user) => {
-      utils.itemNotFound(err, user, reject, 'USER_DOES_NOT_EXIST');
-      resolve(user);
-    })
+const findUser = async (id) => new Promise((resolve, reject) => {
+  model.findById(id, 'password email', (err, user) => {
+    utils.itemNotFound(err, user, reject, 'USER_DOES_NOT_EXIST');
+    resolve(user);
   });
+});
 
 /**
  * Build passwords do not match object
  * @param {Object} user - user object
  */
-const passwordsDoNotMatch = async () =>
-  new Promise((resolve) => {
-    resolve(utils.buildErrObject(409, 'WRONG_PASSWORD'));
-  })
+const passwordsDoNotMatch = async () => new Promise((resolve) => {
+  resolve(utils.buildErrObject(409, 'WRONG_PASSWORD'));
+});
 
 /**
  * Changes password in database
  * @param {string} id - user id
  * @param {Object} req - request object
  */
-const changePasswordInDB = async (id, req) =>
-  new Promise((resolve, reject) => {
-    model.findById(id, '+password', (err, user) => {
-      utils.itemNotFound(err, user, reject, 'NOT_FOUND');
+const changePasswordInDB = async (id, req) => new Promise((resolve, reject) => {
+  model.findById(id, '+password', (err, user) => {
+    utils.itemNotFound(err, user, reject, 'NOT_FOUND');
 
-      // Assigns new password to user
-      user.password = req.newPassword;
+    // Assigns new password to user
+    user.password = req.newPassword;
 
-      // Saves in DB
-      user.save((error) => {
-        if (err) {
-          reject(utils.buildErrObject(422, error.message));
-        }
-        resolve(utils.buildSuccObject('PASSWORD_CHANGED'));
-      })
+    // Saves in DB
+    user.save((error) => {
+      if (err) {
+        reject(utils.buildErrObject(422, error.message));
+      }
+      resolve(utils.buildSuccObject('PASSWORD_CHANGED'));
     });
-  })
+  });
+});
 
 /** ******************
  * Public functions *

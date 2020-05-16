@@ -37,7 +37,7 @@ const generateToken = (user) => {
       process.env.JWT_SECRET
     )
   );
-}
+};
 
 /**
  * Creates an object with user info
@@ -61,66 +61,63 @@ const setUserInfo = (req) => {
     };
   }
   return user;
-}
+};
 
 /**
  * Saves a new user access and then returns token
  * @param {Object} req - request object
  * @param {Object} user - user object
  */
-const saveUserAccessAndReturnToken = async (req, user) =>
-  new Promise((resolve, reject) => {
-    const userAccess = new UserAccess({
-      email: user.email,
-      ip: utils.getIP(req),
-      browser: utils.getBrowserInfo(req),
-      country: utils.getCountry(req)
-    });
-    userAccess.save((err) => {
-      if (err) {
-        reject(utils.buildErrObject(422, err.message));
-      }
-      const userInfo = setUserInfo(user);
-      // Returns data with access token
-      resolve({
-        token: generateToken(user._id),
-        user: userInfo
-      });
-    })
+const saveUserAccessAndReturnToken = async (req, user) => new Promise((resolve, reject) => {
+  const userAccess = new UserAccess({
+    email: user.email,
+    ip: utils.getIP(req),
+    browser: utils.getBrowserInfo(req),
+    country: utils.getCountry(req)
   });
+  userAccess.save((err) => {
+    if (err) {
+      reject(utils.buildErrObject(422, err.message));
+    }
+    const userInfo = setUserInfo(user);
+    // Returns data with access token
+    resolve({
+      token: generateToken(user._id),
+      user: userInfo
+    });
+  });
+});
 
 /**
  * Blocks a user by setting blockExpires to the specified date based on constant HOURS_TO_BLOCK
  * @param {Object} user - user object
  */
-const blockUser = async (user) =>
-  new Promise((resolve, reject) => {
-    user.blockExpires = addHours(new Date(), HOURS_TO_BLOCK);
-    user.save((err, result) => {
-      if (err) {
-        reject(utils.buildErrObject(422, err.message));
-      }
-      if (result) {
-        resolve(utils.buildErrObject(409, 'BLOCKED_USER'));
-      }
-    });
-  })
+const blockUser = async (user) => new Promise((resolve, reject) => {
+  user.blockExpires = addHours(new Date(), HOURS_TO_BLOCK);
+  user.save((err, result) => {
+    if (err) {
+      reject(utils.buildErrObject(422, err.message));
+    }
+    if (result) {
+      resolve(utils.buildErrObject(409, 'BLOCKED_USER'));
+    }
+  });
+});
 
 /**
  * Saves login attempts to dabatabse
  * @param {Object} user - user object
  */
-const saveLoginAttemptsToDB = async (user) =>
-  new Promise((resolve, reject) => {
-    user.save((err, result) => {
-      if (err) {
-        reject(utils.buildErrObject(422, err.message));
-      }
-      if (result) {
-        resolve(true);
-      }
-    });
-  })
+const saveLoginAttemptsToDB = async (user) => new Promise((resolve, reject) => {
+  user.save((err, result) => {
+    if (err) {
+      reject(utils.buildErrObject(422, err.message));
+    }
+    if (result) {
+      resolve(true);
+    }
+  });
+});
 
 /**
  * Checks that login attempts are greater than specified in constant and also that blockexpires is less than now
@@ -132,66 +129,62 @@ const blockIsExpired = (user) => user.loginAttempts > LOGIN_ATTEMPTS && user.blo
  *
  * @param {Object} user - user object.
  */
-const checkLoginAttemptsAndBlockExpires = async (user) =>
-  new Promise((resolve, reject) => {
-    // Let user try to login again after blockexpires, resets user loginAttempts
-    if (blockIsExpired(user)) {
-      user.loginAttempts = 0;
-      user.save((err, result) => {
-        if (err) {
-          reject(utils.buildErrObject(422, err.message));
-        }
-        if (result) {
-          resolve(true);
-        }
-      });
-    } else {
-      // User is not blocked, check password (normal behaviour)
-      resolve(true);
-    }
-  });
+const checkLoginAttemptsAndBlockExpires = async (user) => new Promise((resolve, reject) => {
+  // Let user try to login again after blockexpires, resets user loginAttempts
+  if (blockIsExpired(user)) {
+    user.loginAttempts = 0;
+    user.save((err, result) => {
+      if (err) {
+        reject(utils.buildErrObject(422, err.message));
+      }
+      if (result) {
+        resolve(true);
+      }
+    });
+  } else {
+    // User is not blocked, check password (normal behaviour)
+    resolve(true);
+  }
+});
 
 /**
  * Checks if blockExpires from user is greater than now
  * @param {Object} user - user object
  */
-const userIsBlocked = async (user) =>
-  new Promise((resolve, reject) => {
-    if (user.blockExpires > new Date()) {
-      reject(utils.buildErrObject(409, 'BLOCKED_USER'));
-    }
-    resolve(true);
-  })
+const userIsBlocked = async (user) => new Promise((resolve, reject) => {
+  if (user.blockExpires > new Date()) {
+    reject(utils.buildErrObject(409, 'BLOCKED_USER'));
+  }
+  resolve(true);
+});
 
 /**
  * Finds user by email
  * @param {string} email - user´s email
  */
-const findUser = async (email) =>
-  new Promise((resolve, reject) => {
-    User.findOne(
-      {
-        email
-      },
-      'password loginAttempts blockExpires name email role verified verification',
-      (err, item) => {
-        utils.itemNotFound(err, item, reject, 'USER_DOES_NOT_EXIST');
-        resolve(item);
-      }
-    )
-  });
+const findUser = async (email) => new Promise((resolve, reject) => {
+  User.findOne(
+    {
+      email
+    },
+    'password loginAttempts blockExpires name email role verified verification',
+    (err, item) => {
+      utils.itemNotFound(err, item, reject, 'USER_DOES_NOT_EXIST');
+      resolve(item);
+    }
+  );
+});
 
 /**
  * Finds user by ID
  * @param {string} id - user´s id
  */
-const findUserById = async (userId) =>
-  new Promise((resolve, reject) => {
-    User.findById(userId, (err, item) => {
-      utils.itemNotFound(err, item, reject, 'USER_DOES_NOT_EXIST');
-      resolve(item);
-    })
+const findUserById = async (userId) => new Promise((resolve, reject) => {
+  User.findById(userId, (err, item) => {
+    utils.itemNotFound(err, item, reject, 'USER_DOES_NOT_EXIST');
+    resolve(item);
   });
+});
 
 /**
  * Adds one attempt to loginAttempts, then compares loginAttempts with the constant LOGIN_ATTEMPTS, if is less returns wrong password, else returns blockUser function
@@ -207,31 +200,30 @@ const passwordsDoNotMatch = async (user) => {
       resolve(blockUser(user));
     }
     reject(utils.buildErrObject(422, 'ERROR'));
-  })
-}
+  });
+};
 
 /**
  * Registers a new user in database
  * @param {Object} req - request object
  */
-const registerUser = async (req) =>
-  new Promise((resolve, reject) => {
-    const user = new User({
-      frist_name: req.frist_name,
-      middle_name: req.middle_name,
-      last_name: req.last_name,
-      date_of_birth: req.date_of_birth,
-      email: req.email,
-      password: req.password,
-      verification: uuid.v4()
-    });
-    user.save((err, item) => {
-      if (err) {
-        reject(utils.buildErrObject(422, err.message));
-      }
-      resolve(item);
-    })
+const registerUser = async (req) => new Promise((resolve, reject) => {
+  const user = new User({
+    frist_name: req.frist_name,
+    middle_name: req.middle_name,
+    last_name: req.last_name,
+    date_of_birth: req.date_of_birth,
+    email: req.email,
+    password: req.password,
+    verification: uuid.v4()
   });
+  user.save((err, item) => {
+    if (err) {
+      reject(utils.buildErrObject(422, err.message));
+    }
+    resolve(item);
+  });
+});
 
 /**
  * Builds the registration token
@@ -247,130 +239,123 @@ const returnRegisterToken = (item, userInfo) => {
     user: userInfo
   };
   return data;
-}
+};
 
 /**
  * Checks if verification id exists for user
  * @param {string} id - verification id
  */
-const verificationExists = async (id) =>
-  new Promise((resolve, reject) => {
-    User.findOne(
-      {
-        verification: id,
-        verified: false
-      },
-      (err, user) => {
-        utils.itemNotFound(err, user, reject, 'NOT_FOUND_OR_ALREADY_VERIFIED');
-        resolve(user);
-      }
-    )
-  });
+const verificationExists = async (id) => new Promise((resolve, reject) => {
+  User.findOne(
+    {
+      verification: id,
+      verified: false
+    },
+    (err, user) => {
+      utils.itemNotFound(err, user, reject, 'NOT_FOUND_OR_ALREADY_VERIFIED');
+      resolve(user);
+    }
+  );
+});
 
 /**
  * Verifies an user
  * @param {Object} user - user object
  */
-const verifyUser = async (user) =>
-  new Promise((resolve, reject) => {
-    user.verified = true;
-    user.save((err, item) => {
-      if (err) {
-        reject(utils.buildErrObject(422, err.message));
-      }
-      resolve({
-        email: item.email,
-        verified: item.verified
-      });
-    })
+const verifyUser = async (user) => new Promise((resolve, reject) => {
+  user.verified = true;
+  user.save((err, item) => {
+    if (err) {
+      reject(utils.buildErrObject(422, err.message));
+    }
+    resolve({
+      email: item.email,
+      verified: item.verified
+    });
   });
+});
 
 /**
  * Marks a request to reset password as used
  * @param {Object} req - request object
  * @param {Object} forgot - forgot object
  */
-const markResetPasswordAsUsed = async (req, forgot) =>
-  new Promise((resolve, reject) => {
-    forgot.used = true;
-    forgot.ipChanged = utils.getIP(req);
-    forgot.browserChanged = utils.getBrowserInfo(req);
-    forgot.countryChanged = utils.getCountry(req);
-    forgot.save((err, item) => {
-      utils.itemNotFound(err, item, reject, 'NOT_FOUND');
-      resolve(utils.buildSuccObject('PASSWORD_CHANGED'));
-    })
+const markResetPasswordAsUsed = async (req, forgot) => new Promise((resolve, reject) => {
+  forgot.used = true;
+  forgot.ipChanged = utils.getIP(req);
+  forgot.browserChanged = utils.getBrowserInfo(req);
+  forgot.countryChanged = utils.getCountry(req);
+  forgot.save((err, item) => {
+    utils.itemNotFound(err, item, reject, 'NOT_FOUND');
+    resolve(utils.buildSuccObject('PASSWORD_CHANGED'));
   });
+});
 
 /**
  * Updates a user password in database
  * @param {string} password - new password
  * @param {Object} user - user object
  */
-const updatePassword = async (password, user) =>
-  new Promise((resolve, reject) => {
-    user.password = password;
-    user.save((err, item) => {
-      utils.itemNotFound(err, item, reject, 'NOT_FOUND');
-      resolve(item);
-    })
+const updatePassword = async (password, user) => new Promise((resolve, reject) => {
+  user.password = password;
+  user.save((err, item) => {
+    utils.itemNotFound(err, item, reject, 'NOT_FOUND');
+    resolve(item);
   });
+});
 
 /**
  * Finds user by email to reset password
  * @param {string} email - user email
  */
-const findUserToResetPassword = async (email) =>
-  new Promise((resolve, reject) => {
-    User.findOne(
-      {
-        email
-      },
-      (err, user) => {
-        utils.itemNotFound(err, user, reject, 'NOT_FOUND');
-        resolve(user);
-      }
-    )
-  });
+const findUserToResetPassword = async (email) => new Promise((resolve, reject) => {
+  User.findOne(
+    {
+      email
+    },
+    (err, user) => {
+      utils.itemNotFound(err, user, reject, 'NOT_FOUND');
+      resolve(user);
+    }
+  );
+});
 
 /**
  * Checks if a forgot password verification exists
  * @param {string} id - verification id
  */
-const findForgotPassword = async (id) =>
-  new Promise((resolve, reject) => {
-    ForgotPassword.findOne(
-      {
-        verification: id,
-        used: false
-      },
-      (err, item) => {
-        utils.itemNotFound(err, item, reject, 'NOT_FOUND_OR_ALREADY_USED');
-        resolve(item);
-      }
-    )
-  });
+const findForgotPassword = async (id) => new Promise((resolve, reject) => {
+  ForgotPassword.findOne(
+    {
+      verification: id,
+      used: false
+    },
+    (err, item) => {
+      utils.itemNotFound(err, item, reject, 'NOT_FOUND_OR_ALREADY_USED');
+      resolve(item);
+    }
+  );
+});
 
 /**
  * Creates a new password forgot
  * @param {Object} req - request object
  */
-const saveForgotPassword = async (req) =>
-  new Promise((resolve, reject) => {
-    const forgot = new ForgotPassword({
-      email: req.body.email,
-      verification: uuid.v4(),
-      ipRequest: utils.getIP(req),
-      browserRequest: utils.getBrowserInfo(req),
-      countryRequest: utils.getCountry(req)
-    });
-    forgot.save((err, item) => {
-      if (err) {
-        reject(utils.buildErrObject(422, err.message));
-      }
-      resolve(item);
-    })
+const saveForgotPassword = async (req) => new Promise((resolve, reject) => {
+  const forgot = new ForgotPassword({
+    email: req.body.email,
+    verification: uuid.v4(),
+    ipRequest: utils.getIP(req),
+    browserRequest: utils.getBrowserInfo(req),
+    countryRequest: utils.getCountry(req)
   });
+  forgot.save((err, item) => {
+    if (err) {
+      reject(utils.buildErrObject(422, err.message));
+    }
+    resolve(item);
+  });
+});
 
 /**
  * Builds an object with created forgot password object, if env is development or testing exposes the verification
@@ -388,38 +373,36 @@ const forgotPasswordResponse = (item) => {
     };
   }
   return data;
-}
+};
 
 /**
  * Checks against user if has quested role
  * @param {Object} data - data object
  * @param {*} next - next callback
  */
-const checkPermissions = async (data, next) =>
-  new Promise((resolve, reject) => {
-    User.findById(data.id, (err, result) => {
-      utils.itemNotFound(err, result, reject, 'NOT_FOUND');
-      if (data.roles.indexOf(result.role) > -1) {
-        return resolve(next());
-      }
-      return reject(utils.buildErrObject(401, 'UNAUTHORIZED'));
-    })
+const checkPermissions = async (data, next) => new Promise((resolve, reject) => {
+  User.findById(data.id, (err, result) => {
+    utils.itemNotFound(err, result, reject, 'NOT_FOUND');
+    if (data.roles.indexOf(result.role) > -1) {
+      return resolve(next());
+    }
+    return reject(utils.buildErrObject(401, 'UNAUTHORIZED'));
   });
+});
 
 /**
  * Gets user id from token
  * @param {string} token - Encrypted and encoded token
  */
-const getUserIdFromToken = async (token) =>
-  new Promise((resolve, reject) => {
-    // Decrypts, verifies and decode token
-    jwt.verify(auth.decrypt(token), process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        reject(utils.buildErrObject(409, 'BAD_TOKEN'));
-      }
-      resolve(decoded.data._id);
-    })
+const getUserIdFromToken = async (token) => new Promise((resolve, reject) => {
+  // Decrypts, verifies and decode token
+  jwt.verify(auth.decrypt(token), process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      reject(utils.buildErrObject(409, 'BAD_TOKEN'));
+    }
+    resolve(decoded.data._id);
   });
+});
 
 /** ******************
  * Public functions *

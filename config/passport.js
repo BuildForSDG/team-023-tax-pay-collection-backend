@@ -41,7 +41,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
       return done(err, false);
     }
     return !user ? done(null, false) : done(null, user);
-  })
+  });
 });
 
 passport.use(jwtLogin);

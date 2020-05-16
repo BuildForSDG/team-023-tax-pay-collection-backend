@@ -13,40 +13,39 @@ const emailer = require('../middleware/emailer');
  * Creates a new item in database
  * @param {Object} req - request object
  */
-const createItem = async (req) =>
-  new Promise((resolve, reject) => {
-    const user = new UserModel({
-      frist_name: req.frist_name,
-      middle_name: req.middle_name,
-      last_name: req.last_name,
-      date_of_birth: req.date_of_birth,
-      email: req.email,
-      password: req.password,
-      role: req.role,
-      phone: req.phone,
-      city: req.city,
-      state: req.state,
-      country: req.country,
-      location: req.location,
-      verification: uuid.v4()
-    });
-    user.save((err, item) => {
-      if (err) {
-        reject(utils.buildErrObject(422, err.message));
-      }
-      // Removes properties with rest operator
-      const removeProperties = ({
-        // eslint-disable-next-line no-unused-vars
-        password,
-        // eslint-disable-next-line no-unused-vars
-        blockExpires,
-        // eslint-disable-next-line no-unused-vars
-        loginAttempts,
-        ...rest
-      }) => rest;
-      resolve(removeProperties(item.toObject()));
-    })
+const createItem = async (req) => new Promise((resolve, reject) => {
+  const user = new UserModel({
+    frist_name: req.frist_name,
+    middle_name: req.middle_name,
+    last_name: req.last_name,
+    date_of_birth: req.date_of_birth,
+    email: req.email,
+    password: req.password,
+    role: req.role,
+    phone: req.phone,
+    city: req.city,
+    state: req.state,
+    country: req.country,
+    location: req.location,
+    verification: uuid.v4()
   });
+  user.save((err, item) => {
+    if (err) {
+      reject(utils.buildErrObject(422, err.message));
+    }
+    // Removes properties with rest operator
+    const removeProperties = ({
+      // eslint-disable-next-line no-unused-vars
+      password,
+      // eslint-disable-next-line no-unused-vars
+      blockExpires,
+      // eslint-disable-next-line no-unused-vars
+      loginAttempts,
+      ...rest
+    }) => rest;
+    resolve(removeProperties(item.toObject()));
+  });
+});
 
 /** ******************
  * Public functions *

@@ -16,5 +16,5 @@ module.exports = () => {
     const modelFile = removeExtensionFromFile(file);
     // Prevents loading of this file
     return modelFile !== 'index' ? require(`./${modelFile}`) : '';
-  })
+  });
 };
