@@ -1,16 +1,16 @@
 const express = require('express');
+const trimRequest = require('trim-request');
+const passport = require('passport');
 const controller = require('../controllers/profile');
 const validate = require('../controllers/profile.validate');
 const AuthController = require('../controllers/auth');
 
 const router = express.Router();
 require('../../config/passport');
-const passport = require('passport');
 
 const requireAuth = passport.authenticate('jwt', {
   session: false
 });
-const trimRequest = require('trim-request');
 
 /*
  * Profile routes

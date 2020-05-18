@@ -31,8 +31,8 @@ const UserAccessSchema = new mongoose.Schema(
     timestamps: true,
     versionKey: false,
     toJSON: {
-      virtuals: true,
-      transform: (obj, ret) => {}
+      virtuals: true
+      // transform: (obj, ret) => {}
     }
   }
 );

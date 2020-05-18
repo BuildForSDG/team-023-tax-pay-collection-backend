@@ -25,7 +25,7 @@ const deleteModelFromDB = (model) => new Promise((resolve, reject) => {
 
 const clean = async () => {
   try {
-    const promiseArray = models.map(async (model) => await deleteModelFromDB(model));
+    const promiseArray = models.map((model) => deleteModelFromDB(model));
     await Promise.all(promiseArray);
     console.log('Cleanup complete!');
     process.exit(0);

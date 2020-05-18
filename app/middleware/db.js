@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 const { buildSuccObject, buildErrObject, itemNotFound } = require('./utils');
 
 /**

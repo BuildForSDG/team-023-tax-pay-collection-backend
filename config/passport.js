@@ -1,7 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 const passport = require('passport');
+const JwtStrategy = require('passport-jwt').Strategy;
 const User = require('../app/models/user');
 const auth = require('../app/middleware/auth');
-const JwtStrategy = require('passport-jwt').Strategy;
+
 
 /**
  * Extracts token from: header, body or query

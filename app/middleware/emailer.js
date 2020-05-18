@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const nodemailer = require('nodemailer');
 const mg = require('nodemailer-mailgun-transport');
 const i18n = require('i18n');

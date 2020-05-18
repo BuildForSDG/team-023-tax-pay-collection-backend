@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 const jwt = require('jsonwebtoken');
 const uuid = require('uuid');

@@ -11,6 +11,9 @@ router.use('/', require('./auth'));
 router.use('/users', require('./users'));
 router.use('/profile', require('./profile'));
 router.use('/taxcalculator', require('./taxcalculator'));
+router.use('/cities', require('./cities'));
+router.use('/states', require('./states'));
+router.use('/countries', require('./countries'));
 
 /*
  * Setup routes for index

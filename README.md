@@ -242,7 +242,7 @@ If you need to add more models to the project just create a new file in `/app/mo
 
 ### Creating new routes
 
-If you need to add more routes to the project just create a new file in `/app/routes/` and it will be loaded dynamically.
+If you need to add more routes to the project just create a new file in `/app/routes/` and it will be loaded dynamically or you can add them manually.
 
 ### Creating new controllers
 

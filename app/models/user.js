@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
@@ -92,8 +93,8 @@ const UserSchema = new mongoose.Schema(
     timestamps: true,
     versionKey: false,
     toJSON: {
-      virtuals: true,
-      transform: (obj, ret) => {}
+      virtuals: true
+      // transform: (obj, ret) => {}
     }
   }
 );
