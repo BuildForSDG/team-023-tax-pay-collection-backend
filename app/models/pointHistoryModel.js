@@ -4,23 +4,22 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const mongoosePaginate = require('mongoose-paginate-v2');
 
-const paymentSettingsSchema = new Schema(
+const pointHistorySchema = new Schema(
   {
-    payment_provider: { type: String },
-    payment_private_key: { type: String },
-    payment_public_key: { type: String },
-    payment_status: { type: String },
-    payment_organisation_id: {
+    transaction_id: { type: String },
+    payment_id: { type: String },
+    merchant_id: {
       type: Schema.Types.ObjectId,
       ref: 'MerchantOrganisation'
     },
-    payment_user_id: {
+    point_amount: { type: Number },
+    user_id: {
       type: Schema.Types.ObjectId,
       ref: 'User'
     }
   },
   {
-    collection: 'PaymentProviderSettings',
+    collection: 'PointHistory',
     collation: { locale: 'en_US', strength: 1 },
     timestamps: true,
     toJSON: {
@@ -32,5 +31,5 @@ const paymentSettingsSchema = new Schema(
   }
 );
 
-paymentSettingsSchema.plugin(mongoosePaginate);
-module.exports = mongoose.model('PaymentProviderSettings', paymentSettingsSchema);
+pointHistorySchema.plugin(mongoosePaginate);
+module.exports = mongoose.model('PointHistory', pointHistorySchema);

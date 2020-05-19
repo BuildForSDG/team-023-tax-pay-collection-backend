@@ -36,7 +36,7 @@ const TaxSettingSchema = new Schema(
     },
     tax_organistion_id: {
       type: Schema.Types.ObjectId,
-      ref: 'merchantOrganisation',
+      ref: 'MerchantOrganisation',
       required: true
     },
     user: {

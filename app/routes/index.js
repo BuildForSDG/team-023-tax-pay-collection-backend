@@ -16,6 +16,10 @@ router.use('/states', require('./states'));
 router.use('/countries', require('./countries'));
 router.use('/wallets', require('./walletRoutes'));
 router.use('/payment-provider-settings', require('./paymentProviderSettingsRoutes'));
+router.use('/merchant-organisation', require('./merchantOrganisationRoutes'));
+router.use('/point-history', require('./pointHistoryRoutes'));
+router.use('/point-settings', require('./pointSettingsRoutes'));
+router.use('/transaction-info', require('./transactionInfoRoutes'));
 router.use('/notifications', require('./systemNotificationRoutes'));
 
 /*
