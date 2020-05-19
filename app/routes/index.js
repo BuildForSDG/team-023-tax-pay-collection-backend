@@ -14,6 +14,9 @@ router.use('/taxcalculator', require('./taxcalculator'));
 router.use('/cities', require('./cities'));
 router.use('/states', require('./states'));
 router.use('/countries', require('./countries'));
+router.use('/wallets', require('./walletRoutes'));
+router.use('/payment-provider-settings', require('./paymentProviderSettingsRoutes'));
+router.use('/notifications', require('./systemNotificationRoutes'));
 
 /*
  * Setup routes for index
